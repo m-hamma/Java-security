@@ -12,6 +12,7 @@ public class TrippleDes {
 
     private static final String UNICODE_FORMAT = "UTF8";
     public static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
+
     private KeySpec ks;
     private SecretKeyFactory skf;
     private Cipher cipher;

@@ -1,8 +1,10 @@
 package org.example;
-import java.util.Scanner;
+import java.util.*;
 import java.security.MessageDigest;
 import java.security.Security;
 import java.security.Provider;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +14,62 @@ public class Main {
         for (Provider provider:providers) {
             System.out.println("Provider :"+provider.getName()+" - "+provider.getVersionStr());
         }
+        listExemples();
+    }
 
+    private static void listExemples() {
+        Queue<String> namesQueue = new LinkedList<>();
+        Deque<Integer> numbersDeque = new ArrayDeque<>();
+        BlockingQueue<String> waitingCustomers = new ArrayBlockingQueue<>(100);
+
+        for (int i=0;i<105;i++) {
+            waitingCustomers.offer("valeur"+i);
+        }
+        System.out.println(waitingCustomers.remove());
+        System.out.println(waitingCustomers.remove());
+        System.out.println(waitingCustomers.peek());
+        System.out.println(waitingCustomers.remove());
+        List<String> listNames = Arrays.asList("Alice", "Bob", "Cole", "Dale", "Eric", "Frank");
+        Queue<String> queueNames = new LinkedList<>(listNames);
+        System.out.println(""+waitingCustomers.size()+" - " +queueNames);
+
+//        Queue<Integer> queueNumbers = new ArrayBlockingQueue<>(3);
+//        queueNumbers.add(1);
+//        queueNumbers.add(2);
+//        queueNumbers.add(3);
+//        queueNumbers.add(4);
+
+        BlockingQueue<Integer> queueNumbers = new ArrayBlockingQueue<>(100);
+
+        try {
+            queueNumbers.put(2000);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+
+        Queue<String> queueCust = new LinkedList<>();
+        queueCust.offer("Jack");
+
+
+        Deque<String> queueCustomers = new ArrayDeque<>();
+
+        queueCustomers.offer("Bill");
+        queueCustomers.offer("Kim");
+        queueCustomers.offer("Lee");
+        queueCustomers.offer("Peter");
+        queueCustomers.offer("Sam");
+
+        System.out.println("Queue before: " + queueCustomers);
+        queueCustomers.forEach(name -> System.out.println(name));
+        System.out.println("First comes: " + queueCustomers.pollFirst());
+        System.out.println("Last comes: " + queueCustomers.pollLast());
+        System.out.println("Queue after: " + queueCustomers);
+
+
+        String next = queueCust.remove();
+        System.out.println("Next customer is: "+ next);
+
+        next = queueCust.remove(); // throws exception
     }
 
     private static void exmpleCryptageMDP() {
