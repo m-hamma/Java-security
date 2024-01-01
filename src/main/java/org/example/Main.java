@@ -69,7 +69,26 @@ public class Main {
         String next = queueCust.remove();
         System.out.println("Next customer is: "+ next);
 
-        next = queueCust.remove(); // throws exception
+
+
+        //next = queueCust.remove(); // throws exception
+        List list = Collections.synchronizedList(new LinkedList<>());
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                list.add(Thread.currentThread().getName());
+                System.out.println(list.size());
+                System.out.println("Inside : " + Thread.currentThread().getName());
+            }
+        };
+
+        System.out.println("Creating Thread...");
+        Thread thread = new Thread(runnable);
+        Thread thread2 = new Thread(runnable);
+        thread.start();
+        thread2.start();
+        System.out.println(" fin  Thread...");
     }
 
     private static void exmpleCryptageMDP() {
